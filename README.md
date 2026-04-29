@@ -1,5 +1,6 @@
 # zedu-api-tests
 Python-based API testing project using Pytest and Requests, built for learning Git and GitHub workflows
+![Pytest](https://img.shields.io/badge/tests-30%20passing-brightgreen)
 # 🧪 JSONPlaceholder API Test Automation
 
 Automated API test suite for the [JSONPlaceholder](https://jsonplaceholder.typicode.com/) platform, built with **Python** and **Pytest**.
