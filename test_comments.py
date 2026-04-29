@@ -23,3 +23,17 @@ def test_comments_for_first_post():
     assert isinstance(comments_data, list)
     assert len(comments_data) > 0
     assert "email" in comments_data[0]
+import requests
+
+def test_first_comment_details():
+    response = requests.get("https://jsonplaceholder.typicode.com/comments/1")
+    assert response.status_code == 200
+    data = response.json()
+    # Check that the first comment has the expected ID and valid fields
+    assert data["id"] == 1
+    assert isinstance(data["name"], str)
+    assert len(data["name"]) > 0
+    assert isinstance(data["email"], str)
+    assert "@" in data["email"]
+    assert isinstance(data["body"], str)
+    assert len(data["body"]) > 0

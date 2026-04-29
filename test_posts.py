@@ -27,3 +27,14 @@ def test_posts_for_first_user():
     assert isinstance(posts_data, list)
     assert len(posts_data) > 0
     assert "title" in posts_data[0]
+import requests
+
+def test_first_post_title():
+    response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
+    assert response.status_code == 200
+    data = response.json()
+    # Check that the first post has the expected ID and title
+    assert data["id"] == 1
+    assert data["userId"] == 1
+    assert isinstance(data["title"], str)
+    assert len(data["title"]) > 0
