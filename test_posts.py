@@ -38,3 +38,27 @@ def test_first_post_title():
     assert data["userId"] == 1
     assert isinstance(data["title"], str)
     assert len(data["title"]) > 0
+import requests
+
+def test_posts_pagination_limit():
+    response = requests.get("https://jsonplaceholder.typicode.com/posts?_page=1&_limit=5")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) == 5
+    for post in data:
+        assert "id" in post
+        assert "title" in post
+import requests
+
+def test_posts_data_type_consistency():
+    response = requests.get("https://jsonplaceholder.typicode.com/posts")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    # Check that every post has consistent types
+    for post in data:
+        assert isinstance(post["id"], int)
+        assert isinstance(post["userId"], int)
+        assert isinstance(post["title"], str)
+        assert isinstance(post["body"], str)

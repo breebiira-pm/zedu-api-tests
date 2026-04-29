@@ -51,3 +51,19 @@ def test_first_album_details():
     assert len(data["title"]) > 0
     assert isinstance(data["userId"], int)
     assert data["userId"] > 0
+import requests
+
+def test_album_user_ownership():
+    # Get album 1
+    album_response = requests.get("https://jsonplaceholder.typicode.com/albums/1")
+    assert album_response.status_code == 200
+    album_data = album_response.json()
+    user_id = album_data["userId"]
+
+    # Verify that userId corresponds to a valid user
+    user_response = requests.get(f"https://jsonplaceholder.typicode.com/users/{user_id}")
+    assert user_response.status_code == 200
+    user_data = user_response.json()
+    assert user_data["id"] == user_id
+    assert isinstance(user_data["name"], str)
+    assert "email" in user_data

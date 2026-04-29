@@ -21,3 +21,18 @@ def test_first_photo_details():
     assert data["url"].startswith("http")
     assert isinstance(data["thumbnailUrl"], str)
     assert data["thumbnailUrl"].startswith("http")
+import requests
+
+def test_photo_album_ownership():
+    # Get photo 1
+    photo_response = requests.get("https://jsonplaceholder.typicode.com/photos/1")
+    assert photo_response.status_code == 200
+    photo_data = photo_response.json()
+    album_id = photo_data["albumId"]
+
+    # Verify that albumId corresponds to a valid album
+    album_response = requests.get(f"https://jsonplaceholder.typicode.com/albums/{album_id}")
+    assert album_response.status_code == 200
+    album_data = album_response.json()
+    assert album_data["id"] == album_id
+    assert isinstance(album_data["title"], str)

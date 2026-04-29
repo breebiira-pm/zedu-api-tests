@@ -37,3 +37,16 @@ def test_first_comment_details():
     assert "@" in data["email"]
     assert isinstance(data["body"], str)
     assert len(data["body"]) > 0
+import requests
+
+def test_comments_filter_by_postId():
+    response = requests.get("https://jsonplaceholder.typicode.com/comments?postId=1")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) > 0
+    # Every comment should belong to postId = 1
+    for comment in data:
+        assert comment["postId"] == 1
+        assert "email" in comment
+        assert "@" in comment["email"]

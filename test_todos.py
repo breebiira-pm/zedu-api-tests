@@ -34,3 +34,28 @@ def test_first_todo_details():
     assert isinstance(data["title"], str)
     assert len(data["title"]) > 0
     assert isinstance(data["completed"], bool)
+import requests
+
+def test_todos_filter_by_userId():
+    response = requests.get("https://jsonplaceholder.typicode.com/todos?userId=1")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) > 0
+    # Every todo should belong to userId = 1
+    for todo in data:
+        assert todo["userId"] == 1
+        assert isinstance(todo["title"], str)
+        assert isinstance(todo["completed"], bool)
+import requests
+
+def test_todos_filter_by_userId():
+    response = requests.get("https://jsonplaceholder.typicode.com/todos?userId=1")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) > 0
+    for todo in data:
+        assert todo["userId"] == 1
+        assert isinstance(todo["title"], str)
+        assert isinstance(todo["completed"], bool)
